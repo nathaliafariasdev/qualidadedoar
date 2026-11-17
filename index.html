@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sampa Ar | Monitoramento Inteligente da Qualidade do Ar via GNSS e GeoIA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="fluid-home">
+
+  <div class="hero-stage-wrapper">
+    <section class="fluid-hero">
+      <header class="fluid-nav">
+        <a href="index.html" class="fluid-brand">
+          <img src="assets/logo-claro.png" alt="Sampa Ar">
+        </a>
+
+        <nav class="fluid-links">
+          <a href="#projeto">O Projeto</a>
+          <a href="#metodologia">Metodologia</a>
+          <a href="#resultados">Resultados</a>
+          <a href="#tecnologias">Tecnologias</a>
+        </nav>
+
+        <div class="fluid-actions">
+          <a href="dashboard.html" class="glass-pill-btn">Acessar mapa</a>
+        </div>
+      </header>
+
+      <div class="fluid-center">
+        <span class="hero-eyebrow">CIÊNCIA, RÁDIO E QUALIDADE DO AR</span>
+        <h1>O ar deixa pistas.<br /><span>Estamos aprendendo a escutá-las.</span></h1>
+
+        <p class="fluid-subtitle">
+          Sampa Ar combina dados ambientais e sinais GNSS de oito estações para prever PM<sub>2.5</sub> e PM<sub>10</sub> na hora seguinte — e visualizar essas estimativas nos 645 municípios paulistas.
+        </p>
+
+        <div class="cta-cluster">
+          <a href="dashboard.html" class="btn-glass-hero">
+            <span>Explorar as previsões no mapa</span>
+            <span class="arrow">→</span>
+          </a>
+          <span class="hero-note">Previsões e interpolação espacial; não substituem medições oficiais.</span>
+        </div>
+      </div>
+
+      <a href="dashboard.html" class="floating-map-widget" title="Abrir Dashboard Interativo">
+        <div class="widget-text">
+          <span class="widget-kicker">MÉDIA DAS 8 ESTAÇÕES • SP</span>
+          <strong id="home-pm25">-- µg/m³</strong>
+          <small>PM<sub>2.5</sub> • previsão do modelo →</small>
+        </div>
+        <div class="widget-mini-map">
+          <iframe src="mapa_sp.html" title="Prévia ilustrativa do mapa de São Paulo" tabindex="-1"></iframe>
+        </div>
+      </a>
+    </section>
+  </div>
+
+  <section class="partners-section" id="tecnologias">
+    <div class="fluid-container">
+      <div class="partners-glass-bar">
+        <div class="technology-intro">
+          <span class="p-label">DO DADO AO MAPA</span>
+          <p>Uma série horária de 60 dias conecta ambiente, sinais GNSS e aprendizado de máquina para estimar a próxima hora.</p>
+        </div>
+        <div class="technology-pills" aria-label="Tecnologias e fontes do projeto">
+          <span><strong>Ambiente:</strong> Open-Meteo • 60 dias horários</span>
+          <span><strong>Sinais:</strong> GNSS / RBMC-IBGE • 8 estações</span>
+          <span><strong>Modelo:</strong> Python • 1D-CNN + LSTM</span>
+          <span><strong>Mapa:</strong> IDW • 645 municípios</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="fluid-container">
+    <section class="glass-grid-section" id="projeto">
+      <div class="section-intro">
+        <span class="eyebrow-tag">O DESAFIO E A RESPOSTA</span>
+        <h2>Como ampliar a visão sobre a qualidade do ar para além dos pontos de medição?</h2>
+      </div>
+
+      <div class="fluid-cards-3">
+        <article class="glass-info-card">
+          <span class="card-num">01 • O PROBLEMA</span>
+          <h3>Partículas invisíveis, cobertura limitada</h3>
+          <p>PM<sub>2.5</sub> (partículas de até 2,5 µm) e PM<sub>10</sub> (até 10 µm) ficam suspensas no ar. Monitorá-las em solo exige estações físicas, caras de instalar e manter; por isso, grande parte dos municípios não tem acompanhamento contínuo em tempo real.</p>
+        </article>
+
+        <article class="glass-info-card">
+          <span class="card-num">02 • A ABORDAGEM</span>
+          <h3>Combinar fontes que se complementam</h3>
+          <p>O projeto reúne dados horários de qualidade do ar e meteorologia do Open-Meteo com indicadores SNR de sinais GNSS captados por oito estações da RBMC/IBGE. SNR é uma medida da relação entre o sinal recebido e o ruído; é uma pista indireta, não um sensor de partículas. Diferentemente de imagens ópticas, os sinais GNSS podem ser acompanhados continuamente, inclusive à noite e com nuvens.</p>
+        </article>
+
+        <article class="glass-info-card">
+          <span class="card-num">03 • O QUE FOI DESENVOLVIDO</span>
+          <h3>Prever nas estações e representar no território</h3>
+          <p>Uma rede 1D-CNN + LSTM estima PM<sub>2.5</sub> e PM<sub>10</sub> para as oito estações. Depois, a interpolação IDW usa as quatro estações mais próximas para projetar uma superfície estimada nos centros dos 645 municípios.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="glass-grid-section" id="metodologia">
+      <div class="section-intro">
+        <span class="eyebrow-tag">DA SÉRIE TEMPORAL À VISUALIZAÇÃO</span>
+        <h2>O que acontece entre os dados coletados e o mapa?</h2>
+      </div>
+      <div class="method-steps">
+        <article class="method-step">
+          <span>01 • OBSERVAR</span>
+          <h3>60 dias de dados horários, em oito estações</h3>
+          <p>O conjunto reúne qualidade do ar e meteorologia do Open-Meteo, além de SNR GNSS da RBMC/IBGE. A janela de 24 horas considera PM<sub>2.5</sub>, PM<sub>10</sub>, profundidade óptica de aerossóis (AOD, um indicador de partículas ao longo da coluna de ar), temperatura, umidade, precipitação e a hora do dia codificada em seno e cosseno.</p>
+        </article>
+        <article class="method-step">
+          <span>02 • PREVER</span>
+          <h3>Uma rede aprende padrões nas últimas 24 horas</h3>
+          <p>Pense em um meteorologista digital que considera as últimas 24 horas. A 1D-CNN identifica variações locais e rápidas nas séries; a LSTM aprende dependências ao longo do tempo, como ciclos atmosféricos diários. Juntas, produzem uma previsão para a hora seguinte (t+1).</p>
+        </article>
+        <article class="method-step">
+          <span>03 • ESPACIALIZAR</span>
+          <h3>De oito estações para 645 municípios</h3>
+          <p>A interpolação IDW (ponderação pelo inverso da distância) estima valores nos centros municipais. As quatro estações mais próximas contribuem para cada ponto, com maior influência das mais próximas. O mapa é uma projeção espacial, não uma medição em cada município.</p>
+        </article>
+      </div>
+      <p class="scope-disclaimer">As saídas são previsões do modelo nas estações e estimativas interpoladas entre elas. Não equivalem a 645 sensores, não substituem o monitoramento oficial da qualidade do ar e não devem orientar decisões individuais de saúde.</p>
+    </section>
+
+    <section class="glass-grid-section" id="resultados">
+      <div class="section-intro">
+        <span class="eyebrow-tag">O QUE A VALIDAÇÃO MOSTROU</span>
+        <h2>Mais histórico e o ciclo do dia reduziram o erro médio das previsões.</h2>
+      </div>
+      <div class="fluid-cards-3">
+        <article class="glass-info-card">
+          <span class="card-num">PM<sub>2.5</sub> • ERRO MÉDIO (MAE)</span>
+          <h3>4,30 → 1,13 µg/m³</h3>
+          <p>Redução aproximada de 74% em relação ao modelo-base. O MAE resume, em média, o tamanho da diferença entre a previsão e o valor de referência na validação.</p>
+        </article>
+        <article class="glass-info-card">
+          <span class="card-num">PM<sub>10</sub> • ERRO MÉDIO (MAE)</span>
+          <h3>4,92 → 1,33 µg/m³</h3>
+          <p>Redução aproximada de 73% no erro médio em relação ao modelo-base, usando os resultados reportados para o conjunto de validação.</p>
+        </article>
+        <article class="glass-info-card">
+          <span class="card-num">PERDA DE VALIDAÇÃO • HUBER</span>
+          <h3>0,2083 → 0,0217</h3>
+          <p>Redução aproximada de 90%. A perda Huber mede o desacordo entre previsões e referências durante o treinamento e a validação; valores menores indicam melhor ajuste nesse conjunto.</p>
+        </article>
+      </div>
+      <p class="scope-disclaimer">Comparação reportada: modelo-base treinado com 14 dias versus modelo final com 60 dias e codificação cíclica da hora. São métricas de validação, não uma garantia de erro igual em todas as horas, estações ou estimativas municipais.</p>
+    </section>
+
+    <section class="glass-grid-section" id="impacto">
+      <div class="section-intro">
+        <span class="eyebrow-tag">PARA QUEM ESSE TIPO DE INFORMAÇÃO PODE SER ÚTIL?</span>
+        <h2>Uma camada complementar para apoiar perguntas e decisões públicas.</h2>
+      </div>
+      <div class="fluid-cards-3">
+        <article class="glass-info-card">
+          <h3>Saúde pública</h3>
+          <p>Visões regionais podem ajudar equipes e gestores a investigar episódios de poluição e planejar comunicação preventiva, sempre junto a medições oficiais e orientação de saúde.</p>
+        </article>
+        <article class="glass-info-card">
+          <h3>Municípios e defesa civil</h3>
+          <p>Uma cobertura estimada mais ampla pode apoiar o acompanhamento de fumaça de queimadas e inversões térmicas, inclusive em cidades sem estação própria.</p>
+        </article>
+        <article class="glass-info-card">
+          <h3>Ambiente e planejamento urbano</h3>
+          <p>Mapas de poluição podem contribuir para investigar a dispersão de fumaça, os efeitos do tráfego e as necessidades de áreas verdes e transporte mais limpo.</p>
+        </article>
+      </div>
+      <p class="scope-disclaimer">O projeto dialoga com o ODS 3 (saúde e bem-estar, meta 3.9), o ODS 11 (cidades sustentáveis, meta 11.6) e o ODS 9 (inovação, meta 9.5), reaproveitando infraestrutura GNSS existente e ferramentas abertas.</p>
+    </section>
+
+    <section class="glass-grid-section" id="fronteira">
+      <div class="method-glass-box">
+        <div class="method-copy">
+          <span class="eyebrow-tag">EXPLORE O RESULTADO</span>
+          <h2>Veja as oito estações, compare previsões e percorra o mapa municipal.</h2>
+          <p>
+            No dashboard, Sampa Ar mostra a média aritmética das oito previsões das estações. Ao selecionar uma estação, você vê seus valores individuais. O mapa amplia a leitura por meio da interpolação espacial.
+          </p>
+        </div>
+        <a href="dashboard.html" class="btn-glass-hero">
+          <span>Explorar o mapa agora</span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="fluid-footer">
+    <div class="fluid-container footer-row">
+      <span><strong>Sampa Ar | Monitoramento Inteligente da Qualidade do Ar via GNSS & GeoIA</strong> • Projeto de Nathália Farias no Future Tech Leaders GeoAI Bootcamp, em parceria com UNDP ICPSD, PNUD Brasil e AEB.</span>
+      <div class="footer-logos" aria-label="Logotipos de referência">
+        <figure class="footer-logo-item">
+          <img src="assets/UNDP-Logo-Blue-Medium.png" alt="Programa das Nações Unidas para o Desenvolvimento (UNDP)" loading="lazy">
+          <figcaption>UNDP</figcaption>
+        </figure>
+        <figure class="footer-logo-item">
+          <img src="assets/Future_Tech_Leaders3-02.png" alt="Símbolo Future Tech Leaders" loading="lazy">
+          <figcaption>Future Tech Leaders</figcaption>
+        </figure>
+      </div>
+      <div class="footer-legal-links">
+        <a href="termos.html">Termos de uso</a>
+        <a href="privacidade.html">Privacidade</a>
+        <a href="cookies.html">Cookies</a>
+        <button type="button" data-cookie-settings>Preferências de cookies</button>
+        <a href="https://github.com/nathaliafariasdev/qualidadedoar" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="cookie-consent.js"></script>
+</body>
+</html>
