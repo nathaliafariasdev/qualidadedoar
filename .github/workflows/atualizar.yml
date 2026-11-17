@@ -1,0 +1,36 @@
+name: Atualizacao Horaria Sampa Ar
+
+on:
+  schedule:
+    # Roda no minuto 0 de toda hora (UTC)
+    - cron: '0 * * * *'
+  # Permite rodar manualmente com um clique na aba Actions do GitHub
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  atualizar-dados:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar dependências e rodar script
+        run: |
+          pip install pandas numpy requests
+          python scripts/atualizar_previsao.py
+
+      - name: Salvar novos dados no repositório
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add estacoes_pred.json mapa_sp.html
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: atualizacao horaria automatica" && git push)
