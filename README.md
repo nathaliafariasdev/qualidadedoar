@@ -1,9 +1,5 @@
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/logo-claro.png">
-    <source media="(prefers-color-scheme: light)" srcset="assets/logo-escuro.png">
-    <img alt="Sampa Ar" src="assets/logo-escuro.png" width="280">
-  </picture>
+  <img src="assets/banner-relatorio.jpg" alt="Sampa Ar — Future Tech Leaders & UNDP" width="100%">
 </p>
 
 # Sampa Ar — Monitoramento Inteligente da Qualidade do Ar
