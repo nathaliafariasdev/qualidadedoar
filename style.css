@@ -3639,11 +3639,15 @@ html {
 }
 
 .pdf-reader {
+  position: fixed;
+  inset: 50% auto auto 50vw;
+  margin: 0;
   width: min(1120px, calc(100vw - 2rem));
   height: min(86vh, 900px);
   max-width: none;
   max-height: none;
   padding: 1rem;
+  transform: translate(-50%, -50%);
   overflow: hidden;
   color: #183229;
   background: #f6f8f3;
