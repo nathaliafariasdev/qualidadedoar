@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#F5F7F6" />
+  <title>Apresentação Sampa Ar | Future Tech Leaders Brasil 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    :root {
+      --deck-bg: #F5F7F6;
+      --deck-card: #FFFFFF;
+      --deck-border: #E2E8E6;
+      --deck-ink: #102026;
+      --deck-muted: #52635E;
+      --deck-green: #1F7A4C;
+      --deck-lime: #C8E665;
+      --deck-shadow: 0 18px 48px rgba(16, 32, 38, 0.08);
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      min-width: 0;
+      min-height: 0;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    body.slides-page {
+      display: block;
+      background: var(--deck-bg);
+      color: var(--deck-ink);
+      font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      letter-spacing: -0.02em;
+    }
+
+    .slide-deck {
+      position: relative;
+      isolation: isolate;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .deck-slide {
+      position: absolute;
+      inset: 0;
+      display: none;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      padding: clamp(26px, 4.5vw, 72px) clamp(28px, 6vw, 96px) clamp(76px, 8vh, 104px);
+      background: var(--deck-bg);
+    }
+
+    .deck-slide.is-active {
+      display: flex;
+    }
+
+    .cover-slide {
+      flex-direction: column;
+      justify-content: space-between;
+      isolation: isolate;
+      padding: clamp(28px, 4vw, 64px) clamp(30px, 7vw, 112px) clamp(72px, 8vh, 100px);
+      background: #15241F;
+      color: #FFFFFF;
+    }
+
+    .cover-slide::before,
+    .cover-slide::after {
+      position: absolute;
+      inset: 0;
+      content: "";
+      pointer-events: none;
+    }
+
+    .cover-slide::before {
+      z-index: -2;
+      background: url("assets/banner.jfif") center 48% / cover no-repeat;
+      filter: blur(4px) brightness(0.55) saturate(0.78);
+      transform: scale(1.025);
+    }
+
+    .cover-slide::after {
+      z-index: -1;
+      background:
+        linear-gradient(90deg, rgba(10, 25, 21, 0.88) 0%, rgba(12, 31, 26, 0.65) 43%, rgba(11, 25, 23, 0.2) 100%),
+        linear-gradient(0deg, rgba(8, 20, 17, 0.55), transparent 48%);
+    }
+
+    .cover-top,
+    .cover-footer,
+    .deck-header,
+    .brand-lockup,
+    .cover-logos {
+      display: flex;
+      align-items: center;
+      gap: clamp(2rem, 3.5vw, 3.5rem);
+    }
+
+    .cover-top {
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    .cover-logo {
+      display: block;
+      width: auto;
+      height: clamp(32px, 4vw, 52px);
+      max-width: 190px;
+      object-fit: contain;
+    }
+
+    .cover-eyebrow,
+    .deck-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      width: fit-content;
+      color: var(--deck-green);
+      font-size: clamp(0.62rem, 0.85vw, 0.82rem);
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      line-height: 1.35;
+      text-transform: uppercase;
+    }
+
+    .cover-eyebrow {
+      color: var(--deck-lime);
+      text-align: right;
+    }
+
+    .cover-eyebrow::before,
+    .deck-kicker::before {
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 50%;
+      background: currentColor;
+      content: "";
+      flex: 0 0 auto;
+    }
+
+    .cover-copy {
+      width: min(940px, 80%);
+      margin: auto 0;
+      padding: clamp(24px, 4vh, 46px) 0;
+    }
+
+    .cover-copy h1 {
+      max-width: 940px;
+      margin: 1.1rem 0 1.4rem;
+      font-size: clamp(2.5rem, 6.2vw, 6rem);
+      font-weight: 800;
+      letter-spacing: -0.065em;
+      line-height: 0.99;
+      text-wrap: balance;
+    }
+
+    .cover-copy h1 span {
+      color: var(--deck-lime);
+    }
+
+    .cover-copy p {
+      max-width: 740px;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: clamp(0.96rem, 1.45vw, 1.35rem);
+      line-height: 1.65;
+    }
+
+    .cover-footer {
+      justify-content: center;
+      gap: clamp(1.5rem, 4vw, 3rem);
+      min-height: 76px;
+    }
+
+    .cover-logos {
+      gap: clamp(1.2rem, 2.4vw, 2.5rem);
+    }
+
+  .cover-logos img {
+    display: block;
+    width: auto;
+    height: clamp(110px, 14vh, 150px); /* Mais que o dobro dos 60-80px anteriores */
+    max-width: clamp(150px, 16vw, 220px);
+    object-fit: contain;
+  }
+
+    .partner-logos {
+      position: absolute;
+      z-index: 5;
+      bottom: clamp(12px, 2vh, 20px);
+      left: clamp(28px, 6vw, 96px);
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      border: 1px solid var(--deck-border);
+      border-radius: 999px;
+      padding: 8px 14px;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 6px 20px rgba(16, 32, 38, 0.08);
+    }
+
+    .partner-logos img {
+      display: block;
+      width: auto;
+      max-width: 60px;
+      height: clamp(56px, 7vh, 68px);
+      object-fit: contain;
+    }
+
+    .cover-author {
+      color: rgba(255, 255, 255, 0.82);
+      border-left: 1px solid rgba(255, 255, 255, 0.28);
+      padding-left: clamp(1.2rem, 2.5vw, 2.4rem);
+      font-size: clamp(1rem, 1.3vw, 1.2rem);
+      font-weight: 600;
+      text-align: left;
+    }
+
+    .content-slide {
+      flex-direction: column;
+      gap: clamp(18px, 3vh, 34px);
+      padding-bottom: clamp(100px, 13vh, 138px);
+      color: var(--deck-ink);
+    }
+
+    .deck-header {
+      flex: 0 0 auto;
+      justify-content: space-between;
+      gap: 1.5rem;
+      min-width: 0;
+    }
+
+    .brand-lockup {
+      flex: 1 1 auto;
+      gap: 1rem;
+      min-width: 0;
+    }
+
+    .brand-lockup img {
+      display: block;
+      width: auto;
+      height: clamp(30px, 3.4vw, 44px);
+      max-width: 160px;
+      object-fit: contain;
+    }
+
+    .brand-divider {
+      width: 1px;
+      height: 36px;
+      background: var(--deck-border);
+    }
+
+    .deck-title-wrap {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .deck-title-wrap h2 {
+      margin-top: 0.3rem;
+      color: var(--deck-ink);
+      font-size: clamp(1.65rem, 3.2vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.055em;
+      line-height: 1.08;
+      text-wrap: balance;
+    }
+
+    .deck-index {
+      align-self: flex-start;
+      flex: 0 0 auto;
+      border: 1px solid var(--deck-border);
+      border-radius: 999px;
+      padding: 0.55rem 0.85rem;
+      background: var(--deck-card);
+      color: var(--deck-green);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+    }
+
+    .problem-grid {
+      display: grid;
+      flex: 1 1 auto;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-rows: minmax(0, 1fr);
+      gap: clamp(16px, 2vw, 28px);
+      min-height: 0;
+    }
+
+    .deck-card {
+      min-width: 0;
+      border: 1px solid var(--deck-border);
+      border-radius: clamp(18px, 2vw, 28px);
+      padding: clamp(22px, 3vw, 42px);
+      background: var(--deck-card);
+      box-shadow: var(--deck-shadow);
+    }
+
+    .problem-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 0.75rem;
+      padding: clamp(16px, 1.8vw, 24px);
+    }
+
+    .problem-card h3 {
+      margin: 0;
+      color: var(--deck-ink);
+      font-size: clamp(1.25rem, 2.2vw, 2rem);
+      font-weight: 800;
+      letter-spacing: -0.055em;
+      line-height: 1.08;
+    }
+
+    .problem-card p {
+      font-size: clamp(0.78rem, 0.95vw, 0.9rem);
+      line-height: 1.5;
+    }
+
+    .problem-card p,
+    .pipeline-card p,
+    .ods-card p,
+    .closing-card p {
+      color: var(--deck-muted);
+      font-size: clamp(0.88rem, 1.1vw, 1.08rem);
+      line-height: 1.7;
+    }
+
+    .station-band {
+      flex: 0 0 auto;
+      border: 1px solid rgba(31, 122, 76, 0.16);
+      border-radius: 18px;
+      padding: clamp(14px, 1.7vw, 22px) clamp(16px, 2vw, 28px);
+      background: rgba(200, 230, 101, 0.16);
+      text-align: center;
+    }
+
+    .station-band h3 {
+      margin-bottom: 0.9rem;
+      color: var(--deck-muted);
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .station-groups {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.8rem 1rem;
+    }
+
+    .station-badge {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-width: 0;
+      gap: 0.1rem;
+      color: var(--deck-green);
+      font-size: clamp(0.72rem, 0.9vw, 0.88rem);
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    .station-badge strong {
+      color: var(--deck-ink);
+      font-size: clamp(0.82rem, 1vw, 0.98rem);
+      font-weight: 800;
+    }
+
+    .pipeline {
+      display: grid;
+      flex: 1 1 auto;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+      align-items: stretch;
+      gap: clamp(8px, 1.2vw, 18px);
+      min-height: 0;
+    }
+
+    .pipeline-card {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding: clamp(18px, 2.15vw, 32px);
+    }
+
+    .pipeline-card .step-number {
+      color: var(--deck-green);
+      font-size: clamp(1.8rem, 3.2vw, 3.4rem);
+      font-weight: 800;
+      letter-spacing: -0.07em;
+      line-height: 1;
+    }
+
+    .pipeline-card h3 {
+      color: var(--deck-ink);
+      font-size: clamp(1rem, 1.45vw, 1.4rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.2;
+    }
+
+    .pipeline-card p {
+      font-size: clamp(0.75rem, 0.96vw, 0.94rem);
+    }
+
+    .flow-arrow {
+      align-self: center;
+      color: #A5B6AE;
+      font-size: clamp(1.2rem, 2vw, 2rem);
+      font-weight: 500;
+    }
+
+    .result-layout {
+      display: grid;
+      flex: 1 1 auto;
+      grid-template-columns: minmax(260px, 0.78fr) minmax(0, 1.22fr);
+      gap: clamp(18px, 2vw, 30px);
+      min-height: 0;
+    }
+
+    .kpi-stack {
+      display: grid;
+      grid-template-rows: repeat(3, minmax(0, 1fr));
+      gap: clamp(12px, 1.5vh, 18px);
+      min-height: 0;
+    }
+
+    .kpi-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border: 1px solid var(--deck-border);
+      border-left: 5px solid var(--deck-green);
+      border-radius: 18px;
+      padding: clamp(16px, 2vw, 26px);
+      background: var(--deck-card);
+      box-shadow: var(--deck-shadow);
+    }
+
+    .kpi-card strong {
+      color: var(--deck-green);
+      font-size: clamp(1.7rem, 3.3vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.065em;
+      line-height: 1;
+    }
+
+    .kpi-card span {
+      margin-top: 0.55rem;
+      color: var(--deck-muted);
+      font-size: clamp(0.72rem, 0.95vw, 0.9rem);
+      font-weight: 600;
+      line-height: 1.45;
+    }
+
+    .chart-card {
+      position: relative;
+      display: flex;
+      min-width: 0;
+      min-height: 0;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border: 1px solid var(--deck-border);
+      border-radius: clamp(18px, 2vw, 28px);
+      padding: clamp(16px, 2vw, 28px);
+      background: var(--deck-card);
+      box-shadow: var(--deck-shadow);
+    }
+
+    .chart-card img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      object-fit: contain;
+    }
+
+    .chart-card img[hidden] {
+      display: none;
+    }
+
+    .chart-fallback {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      width: 100%;
+      height: 100%;
+      border: 1px dashed #CBD7D1;
+      border-radius: 16px;
+      padding: 2rem;
+      color: var(--deck-muted);
+      text-align: center;
+    }
+
+    .chart-fallback[hidden] {
+      display: none;
+    }
+
+    .chart-fallback strong {
+      color: var(--deck-ink);
+      font-size: clamp(1.1rem, 1.7vw, 1.6rem);
+    }
+
+    .chart-fallback span {
+      max-width: 360px;
+      font-size: clamp(0.78rem, 1vw, 0.95rem);
+      line-height: 1.6;
+    }
+
+    .ods-grid {
+      display: grid;
+      flex: 1 1 auto;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-rows: minmax(0, 1fr);
+      gap: clamp(14px, 1.8vw, 24px);
+      align-items: stretch;
+      min-height: 0;
+    }
+
+    .ods-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 0.45rem;
+      padding: clamp(14px, 1.6vw, 24px);
+    }
+
+    .ods-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: clamp(40px, 4.2vw, 58px);
+      height: clamp(40px, 4.2vw, 58px);
+      border-radius: 18px;
+      background: var(--deck-green);
+      color: #FFFFFF;
+      font-size: clamp(1rem, 1.8vw, 1.6rem);
+      font-weight: 800;
+    }
+
+    .ods-card h3 {
+      color: var(--deck-ink);
+      font-size: clamp(0.85rem, 1.3vw, 1.25rem);
+      font-weight: 800;
+      letter-spacing: -0.045em;
+      line-height: 1.18;
+    }
+
+    .ods-card p {
+      font-size: clamp(0.76rem, 0.9vw, 0.9rem);
+      line-height: 1.45;
+    }
+
+    .closing-card {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      border: 1px solid rgba(31, 122, 76, 0.18);
+      border-radius: 18px;
+      padding: clamp(16px, 2vw, 26px);
+      background: rgba(200, 230, 101, 0.26);
+    }
+
+    .closing-mark {
+      display: flex;
+      flex: 0 0 auto;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--deck-green);
+      color: #FFFFFF;
+      font-size: 1.1rem;
+      font-weight: 800;
+    }
+
+    .closing-card p {
+      color: #334940;
+      font-size: clamp(0.78rem, 1vw, 0.95rem);
+    }
+
+    .deck-controls {
+      position: fixed;
+      z-index: 20;
+      right: clamp(16px, 3vw, 42px);
+      bottom: clamp(14px, 2.5vh, 28px);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      border: 1px solid rgba(16, 32, 38, 0.1);
+      border-radius: 999px;
+      padding: 0.35rem;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 8px 26px rgba(16, 32, 38, 0.12);
+      backdrop-filter: blur(12px);
+    }
+
+    .deck-controls button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      color: var(--deck-green);
+      cursor: pointer;
+      font: inherit;
+      font-size: 1.25rem;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .deck-controls button:hover:not(:disabled),
+    .deck-controls button:focus-visible {
+      outline: none;
+      background: var(--deck-green);
+      color: #FFFFFF;
+    }
+
+    .deck-controls button:disabled {
+      color: #AAB8B2;
+      cursor: default;
+    }
+
+    .deck-counter {
+      min-width: 48px;
+      color: var(--deck-ink);
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .deck-controls.is-cover {
+      border-color: rgba(255, 255, 255, 0.2);
+      background: rgba(16, 32, 38, 0.72);
+    }
+
+    .deck-controls button:focus-visible {
+      box-shadow: 0 0 0 3px rgba(200, 230, 101, 0.55);
+    }
+
+    .deck-controls button:disabled:hover {
+      background: transparent;
+    }
+
+    .deck-controls.is-cover .deck-counter {
+      color: #FFFFFF;
+    }
+
+    .deck-controls.is-cover button {
+      color: var(--deck-lime);
+    }
+
+    .deck-controls.is-cover button:disabled {
+      color: rgba(255, 255, 255, 0.38);
+    }
+
+    @media (max-width: 1000px) {
+      .deck-title-wrap h2 {
+        font-size: clamp(1.25rem, 2.3vw, 1.6rem);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .deck-slide {
+        padding: 26px 28px 76px;
+      }
+
+      .cover-slide {
+        padding: 28px 32px 76px;
+      }
+
+      .cover-copy {
+        width: min(760px, 92%);
+      }
+
+      .pipeline {
+        gap: 7px;
+      }
+
+      .pipeline-card {
+        padding: 14px;
+      }
+
+      .result-layout {
+        grid-template-columns: minmax(220px, 0.82fr) minmax(0, 1.18fr);
+      }
+    }
+
+    @media (max-height: 600px) {
+      .cover-slide {
+        padding-top: 20px;
+        padding-bottom: 58px;
+      }
+
+      .cover-copy {
+        padding: 8px 0;
+      }
+
+      .cover-copy h1 {
+        margin: 0.6rem 0 0.75rem;
+        font-size: clamp(2rem, 5vw, 3.8rem);
+      }
+
+      .cover-copy p {
+        font-size: 0.86rem;
+        line-height: 1.45;
+      }
+
+      .cover-footer {
+        min-height: 44px;
+      }
+
+      .cover-logos img {
+        display: block;
+        width: auto;
+        height: clamp(110px, 14vh, 150px); /* Mais que o dobro dos 60-80px anteriores */
+        max-width: clamp(150px, 16vw, 220px);
+        object-fit: contain;
+      }
+    }
+
+    @media (max-height: 720px) and (min-width: 681px) {
+      .cover-slide {
+        padding: 20px 7vw 72px;
+      }
+
+      .cover-logo {
+        height: clamp(30px, 5vh, 40px);
+      }
+
+      .cover-copy {
+        width: min(980px, 82%);
+        margin: 0;
+        padding: 8px 0;
+      }
+
+      .cover-copy h1 {
+        margin: 0.55rem 0 0.75rem;
+        font-size: clamp(2rem, 4.15vw, 3.5rem);
+        line-height: 1.03;
+      }
+
+      .cover-copy p {
+        font-size: clamp(0.88rem, 1.25vw, 1.05rem);
+        line-height: 1.45;
+      }
+
+      .cover-footer {
+        justify-content: center;
+        gap: clamp(1rem, 3vw, 2.25rem);
+        min-height: 82px;
+      }
+
+      .cover-logos {
+        gap: clamp(1rem, 2vw, 1.5rem);
+      }
+
+    .cover-logos img {
+      display: block;
+      width: auto;
+      height: clamp(110px, 14vh, 150px); /* Mais que o dobro dos 60-80px anteriores */
+      max-width: clamp(150px, 16vw, 220px);
+      object-fit: contain;
+    }
+
+      .cover-author {
+        font-size: clamp(1rem, 1.3vw, 1.15rem);
+      }
+    }
+
+    @media (max-width: 680px) {
+      .deck-slide {
+        padding: 22px 18px 72px;
+        gap: 14px;
+      }
+
+      .cover-slide {
+        padding: 22px 20px 72px;
+      }
+
+      .cover-top {
+        align-items: flex-start;
+      }
+
+      .cover-eyebrow {
+        max-width: 52%;
+        font-size: 0.55rem;
+      }
+
+      .cover-copy {
+        width: 100%;
+      }
+
+      .cover-copy h1 {
+        font-size: clamp(2.1rem, 9.5vw, 3.2rem);
+      }
+
+      .cover-copy p {
+        font-size: 0.88rem;
+      }
+
+      .cover-footer {
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+
+      .cover-logos img {
+        display: block;
+        width: auto;
+        height: clamp(110px, 14vh, 150px); /* Mais que o dobro dos 60-80px anteriores */
+        max-width: clamp(150px, 16vw, 220px);
+        object-fit: contain;
+      }
+
+      .cover-author {
+        max-width: 100%;
+        border-left: 0;
+        padding-left: 0;
+        font-size: 0.88rem;
+        text-align: center;
+      }
+
+      .deck-header {
+        align-items: flex-start;
+        gap: 0.75rem;
+      }
+
+      .brand-lockup {
+        gap: 0.6rem;
+      }
+
+      .brand-lockup img {
+        height: 26px;
+        max-width: 110px;
+      }
+
+      .brand-divider {
+        height: 28px;
+      }
+
+      .deck-title-wrap h2 {
+        font-size: clamp(1.05rem, 4vw, 1.5rem);
+      }
+
+      .deck-index {
+        padding: 0.4rem 0.58rem;
+        font-size: 0.58rem;
+      }
+
+      .problem-grid {
+        gap: 10px;
+      }
+
+      .deck-card {
+        border-radius: 16px;
+        padding: 15px;
+      }
+
+      .problem-card {
+        gap: 0.6rem;
+        padding: 12px;
+      }
+
+      .problem-card h3 {
+        font-size: clamp(0.9rem, 4.2vw, 1.25rem);
+      }
+
+      .problem-card p {
+        font-size: clamp(0.64rem, 2.5vw, 0.78rem);
+        line-height: 1.4;
+      }
+
+      .station-band h3 {
+        font-size: 0.6rem;
+      }
+
+      .station-groups {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px 4px;
+      }
+
+      .station-badge {
+        min-height: 0;
+        border: 0;
+        border-radius: 0;
+        padding: 0;
+        background: transparent;
+        font-size: clamp(0.65rem, 2.4vw, 0.78rem);
+      }
+
+      .station-badge strong {
+        font-size: 0.78rem;
+      }
+
+      .pipeline {
+        grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+        grid-template-rows: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .pipeline-card {
+        gap: 0.45rem;
+        padding: 10px;
+      }
+
+      .pipeline-card .step-number {
+        font-size: 1.45rem;
+      }
+
+      .pipeline-card h3 {
+        font-size: 0.78rem;
+      }
+
+      .pipeline-card p {
+        font-size: 0.62rem;
+        line-height: 1.45;
+      }
+
+      .flow-arrow {
+        font-size: 1rem;
+      }
+
+      .result-layout {
+        grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+        gap: 10px;
+      }
+
+      .kpi-stack {
+        gap: 8px;
+      }
+
+      .kpi-card {
+        border-left-width: 3px;
+        border-radius: 12px;
+        padding: 10px;
+      }
+
+      .kpi-card strong {
+        font-size: clamp(1.2rem, 5vw, 1.8rem);
+      }
+
+      .kpi-card span {
+        margin-top: 0.35rem;
+        font-size: 0.62rem;
+      }
+
+      .chart-card {
+        border-radius: 14px;
+        padding: 8px;
+      }
+
+      .chart-fallback {
+        gap: 0.35rem;
+        padding: 8px;
+      }
+
+      .chart-fallback strong {
+        font-size: 0.82rem;
+      }
+
+      .chart-fallback span {
+        font-size: 0.62rem;
+      }
+
+      .ods-grid {
+        gap: 8px;
+      }
+
+      .ods-card {
+        gap: 0.6rem;
+        padding: 12px;
+      }
+
+      .ods-number {
+        width: 36px;
+        height: 36px;
+        border-radius: 11px;
+        font-size: 0.9rem;
+      }
+
+      .ods-card h3 {
+        font-size: 0.78rem;
+      }
+
+      .ods-card p {
+        font-size: 0.62rem;
+        line-height: 1.45;
+      }
+
+      .closing-card {
+        gap: 0.65rem;
+        border-radius: 13px;
+        padding: 10px;
+      }
+
+      .closing-mark {
+        width: 30px;
+        height: 30px;
+        font-size: 0.8rem;
+      }
+
+      .closing-card p {
+        font-size: 0.62rem;
+        line-height: 1.45;
+      }
+
+      .deck-controls {
+        right: 12px;
+        bottom: 10px;
+      }
+
+      .deck-controls button {
+        width: 32px;
+        height: 32px;
+      }
+
+      .partner-logos {
+        left: 18px;
+        gap: 0.65rem;
+        padding: 5px 8px;
+      }
+
+      .partner-logos img {
+        height: clamp(40px, 7vh, 50px);
+        max-width: 48px;
+      }
+
+      .content-slide {
+        padding-bottom: 100px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body class="slides-page">
+  <main class="slide-deck" aria-label="Apresentação do projeto Sampa Ar">
+    <section class="deck-slide cover-slide is-active" data-slide="0" aria-label="Slide 1 de 6" aria-hidden="false">
+      <header class="cover-top">
+        <img class="cover-logo" src="assets/logo-claro.png" alt="Sampa Ar">
+        <span class="cover-eyebrow">PROJETO FINAL | FUTURE TECH LEADERS BRASIL 2026</span>
+      </header>
+
+      <div class="cover-copy">
+        <h1><span>Sampa Ar</span><br>Monitoramento Inteligente da Qualidade do Ar (MP2,5 e MP10) no Estado de São Paulo</h1>
+        <p>Uma solução de GeoAI que reaproveita a infraestrutura GNSS da RBMC/IBGE e redes neurais híbridas (CNN-LSTM) para cobrir os 645 municípios de São Paulo em tempo real.</p>
+      </div>
+
+      <footer class="cover-footer">
+        <div class="cover-logos" aria-label="Organizações parceiras">
+          <img src="assets/Future_Tech_Leaders3-02.png" alt="Future Tech Leaders">
+          <img src="assets/UNDP-Logo-Blue-Medium.png" alt="United Nations Development Programme">
+        </div>
+        <p class="cover-author">Autora: Nathália C. Melo de Farias</p>
+      </footer>
+    </section>
+
+    <section class="deck-slide content-slide" data-slide="1" aria-label="Slide 2 de 6" aria-hidden="true">
+      <header class="deck-header">
+        <div class="brand-lockup">
+          <img src="assets/logo-escuro.png" alt="Sampa Ar">
+          <span class="brand-divider" aria-hidden="true"></span>
+          <div class="deck-title-wrap">
+            <span class="deck-kicker">O PROBLEMA E A PROPOSTA</span>
+            <h2>O Desafio &amp; A Solução</h2>
+          </div>
+        </div>
+        <span class="deck-index">SAMPA AR • 2026</span>
+      </header>
+
+      <div class="problem-grid">
+        <article class="deck-card problem-card">
+          <h3>O Problema</h3>
+          <p>Estações físico-químicas de qualidade do ar têm alto custo de implantação e manutenção, deixando a maior parte dos 645 municípios paulistas sem cobertura telemétrica contínua.</p>
+        </article>
+        <article class="deck-card problem-card">
+          <h3>A Solução Sampa Ar</h3>
+          <p>Reaproveitamento da infraestrutura geodésica existente da RBMC/IBGE (8 estações GNSS em SP) como sensor atmosférico complementar para estimar MP2,5 e MP10 em escala estadual.</p>
+        </article>
+      </div>
+
+      <div class="station-band">
+        <h3>8 estações GNSS da RBMC/IBGE</h3>
+        <div class="station-groups">
+          <span class="station-badge"><strong>POLI</strong><span>São Paulo</span></span>
+          <span class="station-badge"><strong>SJSP</strong><span>São José dos Campos</span></span>
+          <span class="station-badge"><strong>PPTE</strong><span>Presidente Prudente</span></span>
+          <span class="station-badge"><strong>SPAR</strong><span>Araçatuba</span></span>
+          <span class="station-badge"><strong>FRAN</strong><span>Franca</span></span>
+          <span class="station-badge"><strong>BAUR</strong><span>Bauru</span></span>
+          <span class="station-badge"><strong>UBA1</strong><span>Ubatuba</span></span>
+          <span class="station-badge"><strong>ILHA</strong><span>Ilha Solteira</span></span>
+        </div>
+      </div>
+      <div class="partner-logos" aria-label="Organizações parceiras">
+        <img src="assets/Future_Tech_Leaders3-02.png" alt="Future Tech Leaders">
+        <img src="assets/UNDP-Logo-Blue-Medium.png" alt="United Nations Development Programme">
+      </div>
+    </section>
+
+    <section class="deck-slide content-slide" data-slide="2" aria-label="Slide 3 de 6" aria-hidden="true">
+      <header class="deck-header">
+        <div class="brand-lockup">
+          <img src="assets/logo-escuro.png" alt="Sampa Ar">
+          <span class="brand-divider" aria-hidden="true"></span>
+          <div class="deck-title-wrap">
+            <span class="deck-kicker">ARQUITETURA • PIPELINE</span>
+            <h2>Do Sinal de Satélite ao Mapa Municipal</h2>
+          </div>
+        </div>
+        <span class="deck-index">ENTRADA → ESTIMATIVA</span>
+      </header>
+
+      <div class="pipeline">
+        <article class="deck-card pipeline-card">
+          <span class="step-number">01</span>
+          <h3>Entrada (60 dias)</h3>
+          <p>Observáveis GNSS (SNR/ZTD), meteorologia (Open-Meteo), AOD e codificação cíclica horária (seno/cosseno).</p>
+        </article>
+        <span class="flow-arrow" aria-hidden="true">→</span>
+        <article class="deck-card pipeline-card">
+          <span class="step-number">02</span>
+          <h3>Rede Híbrida</h3>
+          <p>Camada Conv1D (variações bruscas) + 2 camadas LSTM (inércia temporal) prevendo t+1.</p>
+        </article>
+        <span class="flow-arrow" aria-hidden="true">→</span>
+        <article class="deck-card pipeline-card">
+          <span class="step-number">03</span>
+          <h3>Expansão Espacial</h3>
+          <p>Interpolação IDW (p = 2, k = 4) projetando as 8 estações para os 645 municípios do IBGE.</p>
+        </article>
+        <span class="flow-arrow" aria-hidden="true">→</span>
+        <article class="deck-card pipeline-card">
+          <span class="step-number">04</span>
+          <h3>Automação Horária</h3>
+          <p>Pipeline CI/CD no GitHub Actions atualizando estacoes_pred.json e o mapa interativo a cada hora.</p>
+        </article>
+      </div>
+      <div class="partner-logos" aria-label="Organizações parceiras">
+        <img src="assets/Future_Tech_Leaders3-02.png" alt="Future Tech Leaders">
+        <img src="assets/UNDP-Logo-Blue-Medium.png" alt="United Nations Development Programme">
+      </div>
+    </section>
+
+    <section class="deck-slide content-slide" data-slide="3" aria-label="Slide 4 de 6" aria-hidden="true">
+      <header class="deck-header">
+        <div class="brand-lockup">
+          <img src="assets/logo-escuro.png" alt="Sampa Ar">
+          <span class="brand-divider" aria-hidden="true"></span>
+          <div class="deck-title-wrap">
+            <span class="deck-kicker">RESULTADOS • TESTE 1</span>
+            <h2>Validação nas Estações Base (CETESB &amp; CAMS)</h2>
+          </div>
+        </div>
+        <span class="deck-index">N = 5</span>
+      </header>
+
+      <div class="result-layout">
+        <div class="kpi-stack">
+          <article class="kpi-card"><strong>2,16 µg/m³</strong><span>MAE frente à CETESB</span></article>
+          <article class="kpi-card"><strong>100,0%</strong><span>Acerto de faixa ambiental</span></article>
+          <article class="kpi-card"><strong>91,4%</strong><span>Precisão na escala Boa</span></article>
+        </div>
+        <figure class="chart-card" data-chart>
+          <img src="assets/grafico1_validacao_8_estacoes.png" alt="Gráfico de validação nas oito estações">
+          <figcaption class="chart-fallback">
+            <strong>Validação nas estações base</strong>
+            <span>O gráfico será exibido aqui quando <code>grafico1_validacao_8_estacoes.png</code> for adicionado à pasta assets.</span>
+          </figcaption>
+        </figure>
+      </div>
+      <div class="partner-logos" aria-label="Organizações parceiras">
+        <img src="assets/Future_Tech_Leaders3-02.png" alt="Future Tech Leaders">
+        <img src="assets/UNDP-Logo-Blue-Medium.png" alt="United Nations Development Programme">
+      </div>
+    </section>
+
+    <section class="deck-slide content-slide" data-slide="4" aria-label="Slide 5 de 6" aria-hidden="true">
+      <header class="deck-header">
+        <div class="brand-lockup">
+          <img src="assets/logo-escuro.png" alt="Sampa Ar">
+          <span class="brand-divider" aria-hidden="true"></span>
+          <div class="deck-title-wrap">
+            <span class="deck-kicker">RESULTADOS • TESTE 2</span>
+            <h2>Expansão Espacial em Municípios sem Antena GNSS</h2>
+          </div>
+        </div>
+        <span class="deck-index">N = 8</span>
+      </header>
+
+      <div class="result-layout">
+        <div class="kpi-stack">
+          <article class="kpi-card"><strong>4,78 µg/m³</strong><span>MAE em 8 cidades sem GNSS</span></article>
+          <article class="kpi-card"><strong>84,6%</strong><span>Acurácia estadual consolidada em 13 localidades</span></article>
+          <article class="kpi-card"><strong>2,03 µg/m³</strong><span>Erro residual em dispersão regional</span></article>
+        </div>
+        <figure class="chart-card" data-chart>
+          <img src="assets/grafico5_expansao_espacial.png" alt="Gráfico de expansão espacial em municípios sem antena GNSS">
+          <figcaption class="chart-fallback">
+            <strong>Expansão espacial</strong>
+            <span>O gráfico será exibido aqui quando <code>grafico5_expansao_espacial.png</code> for adicionado à pasta assets.</span>
+          </figcaption>
+        </figure>
+      </div>
+      <div class="partner-logos" aria-label="Organizações parceiras">
+        <img src="assets/Future_Tech_Leaders3-02.png" alt="Future Tech Leaders">
+        <img src="assets/UNDP-Logo-Blue-Medium.png" alt="United Nations Development Programme">
+      </div>
+    </section>
+
+    <section class="deck-slide content-slide" data-slide="5" aria-label="Slide 6 de 6" aria-hidden="true">
+      <header class="deck-header">
+        <div class="brand-lockup">
+          <img src="assets/logo-escuro.png" alt="Sampa Ar">
+          <span class="brand-divider" aria-hidden="true"></span>
+          <div class="deck-title-wrap">
+            <span class="deck-kicker">IMPACTO • LIMITAÇÕES • DOCUMENTAÇÃO</span>
+            <h2>Impacto Socioambiental (ODS) &amp; Próximos Passos</h2>
+          </div>
+        </div>
+        <span class="deck-index">ENCERRAMENTO</span>
+      </header>
+
+      <div class="ods-grid">
+        <article class="deck-card ods-card">
+          <span class="ods-number">3</span>
+          <h3>ODS 3 • Saúde e Bem-Estar</h3>
+          <p>Apoio preventivo na identificação de episódios de poluição atmosférica.</p>
+        </article>
+        <article class="deck-card ods-card">
+          <span class="ods-number">9</span>
+          <h3>ODS 9 • Indústria e Inovação</h3>
+          <p>Reaproveitamento da rede geodésica aberta da RBMC/IBGE.</p>
+        </article>
+        <article class="deck-card ods-card">
+          <span class="ods-number">11</span>
+          <h3>ODS 11 • Cidades Sustentáveis</h3>
+          <p>Cobertura informacional para os 645 municípios paulistas.</p>
+        </article>
+      </div>
+
+      <aside class="closing-card">
+        <span class="closing-mark" aria-hidden="true">i</span>
+        <p><strong>Observação técnica:</strong> Ferramenta complementar de apoio à gestão ambiental (não substitui boletins oficiais da CETESB). Relatório técnico completo e código aberto disponíveis na plataforma.</p>
+      </aside>
+      <div class="partner-logos" aria-label="Organizações parceiras">
+        <img src="assets/Future_Tech_Leaders3-02.png" alt="Future Tech Leaders">
+        <img src="assets/UNDP-Logo-Blue-Medium.png" alt="United Nations Development Programme">
+      </div>
+    </section>
+  </main>
+
+  <nav class="deck-controls is-cover" aria-label="Navegação dos slides">
+    <button type="button" data-prev aria-label="Slide anterior" disabled>‹</button>
+    <span class="deck-counter" aria-live="polite">1 / 6</span>
+    <button type="button" data-next aria-label="Próximo slide">›</button>
+  </nav>
+
+  <script>
+    (() => {
+      const slides = Array.from(document.querySelectorAll('.deck-slide'));
+      const controls = document.querySelector('.deck-controls');
+      const counter = document.querySelector('.deck-counter');
+      const previousButton = document.querySelector('[data-prev]');
+      const nextButton = document.querySelector('[data-next]');
+      let activeIndex = 0;
+
+      const showSlide = (index) => {
+        activeIndex = Math.max(0, Math.min(index, slides.length - 1));
+        slides.forEach((slide, slideIndex) => {
+          const isActive = slideIndex === activeIndex;
+          slide.classList.toggle('is-active', isActive);
+          slide.setAttribute('aria-hidden', String(!isActive));
+        });
+        counter.textContent = `${activeIndex + 1} / ${slides.length}`;
+        previousButton.disabled = activeIndex === 0;
+        nextButton.disabled = activeIndex === slides.length - 1;
+        controls.classList.toggle('is-cover', activeIndex === 0);
+      };
+
+      previousButton.addEventListener('click', () => showSlide(activeIndex - 1));
+      nextButton.addEventListener('click', () => showSlide(activeIndex + 1));
+
+      document.addEventListener('keydown', (event) => {
+        if (event.altKey || event.ctrlKey || event.metaKey) return;
+        if (event.target instanceof HTMLElement && event.target.isContentEditable) return;
+
+        if (event.key === 'ArrowRight' || event.key === ' ') {
+          event.preventDefault();
+          showSlide(activeIndex + 1);
+        } else if (event.key === 'ArrowLeft') {
+          event.preventDefault();
+          showSlide(activeIndex - 1);
+        }
+      });
+
+      document.querySelectorAll('[data-chart] img').forEach((image) => {
+        const fallback = image.nextElementSibling;
+        const showChart = () => {
+          image.hidden = false;
+          fallback.hidden = true;
+        };
+        const showFallback = () => {
+          image.hidden = true;
+          fallback.hidden = false;
+        };
+
+        image.addEventListener('load', showChart);
+        image.addEventListener('error', showFallback);
+        if (image.complete) {
+          image.naturalWidth > 0 ? showChart() : showFallback();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
