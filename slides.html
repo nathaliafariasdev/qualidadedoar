@@ -66,7 +66,7 @@
       flex-direction: column;
       justify-content: space-between;
       isolation: isolate;
-      padding: clamp(28px, 4vw, 64px) clamp(30px, 7vw, 112px) clamp(72px, 8vh, 100px);
+      padding: clamp(28px, 4vw, 64px) clamp(30px, 7vw, 112px) clamp(170px, 26vh, 220px);
       background: #15241F;
       color: #FFFFFF;
     }
@@ -131,8 +131,9 @@
     }
 
     .cover-eyebrow {
-      color: var(--deck-lime);
+      color: rgba(255, 255, 255, 0.9);
       text-align: right;
+      text-transform: none;
     }
 
     .cover-eyebrow::before,
@@ -154,7 +155,7 @@
     .cover-copy h1 {
       max-width: 940px;
       margin: 1.1rem 0 1.4rem;
-      font-size: clamp(2.5rem, 6.2vw, 6rem);
+      font-size: clamp(2.15rem, 5vw, 4.5rem);
       font-weight: 800;
       letter-spacing: -0.065em;
       line-height: 0.99;
@@ -173,53 +174,58 @@
     }
 
     .cover-footer {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
       justify-content: center;
-      gap: clamp(1.5rem, 4vw, 3rem);
-      min-height: 76px;
+      width: 100%;
+      min-height: clamp(100px, 18vh, 150px);
+      box-sizing: border-box;
+      padding: clamp(8px, 1vw, 14px) clamp(30px, 7vw, 112px);
+      border-radius: 0;
+      background: #FFFFFF;
     }
 
     .cover-logos {
-      gap: clamp(1.2rem, 2.4vw, 2.5rem);
+      justify-content: center;
+      width: fit-content;
+      max-width: 100%;
     }
 
-  .cover-logos img {
-    display: block;
-    width: auto;
-    height: clamp(110px, 14vh, 150px); /* Mais que o dobro dos 60-80px anteriores */
-    max-width: clamp(150px, 16vw, 220px);
-    object-fit: contain;
-  }
+    .cover-logos img {
+      display: block;
+      width: auto;
+      max-width: min(75vw, 920px);
+      height: clamp(130px, 24vh, 175px);
+      max-height: none;
+      object-fit: contain;
+    }
 
     .partner-logos {
       position: absolute;
       z-index: 5;
-      bottom: clamp(12px, 2vh, 20px);
+      bottom: clamp(4px, 0.6vh, 8px);
       left: clamp(28px, 6vw, 96px);
       display: flex;
       align-items: center;
-      gap: 0.9rem;
+      justify-content: center;
+      width: min(300px, calc(100vw - 200px));
+      box-sizing: border-box;
       border: 1px solid var(--deck-border);
-      border-radius: 999px;
-      padding: 8px 14px;
-      background: rgba(255, 255, 255, 0.92);
+      border-radius: 16px;
+      padding: 4px 10px;
+      background: rgba(255, 255, 255, 0.97);
       box-shadow: 0 6px 20px rgba(16, 32, 38, 0.08);
     }
 
     .partner-logos img {
       display: block;
-      width: auto;
-      max-width: 60px;
-      height: clamp(56px, 7vh, 68px);
+      width: 100%;
+      max-width: none;
+      height: auto;
+      max-height: 72px;
       object-fit: contain;
-    }
-
-    .cover-author {
-      color: rgba(255, 255, 255, 0.82);
-      border-left: 1px solid rgba(255, 255, 255, 0.28);
-      padding-left: clamp(1.2rem, 2.5vw, 2.4rem);
-      font-size: clamp(1rem, 1.3vw, 1.2rem);
-      font-weight: 600;
-      text-align: left;
     }
 
     .content-slide {
@@ -706,7 +712,7 @@
     @media (max-height: 600px) {
       .cover-slide {
         padding-top: 20px;
-        padding-bottom: 58px;
+        padding-bottom: clamp(140px, 27vh, 170px);
       }
 
       .cover-copy {
@@ -715,7 +721,7 @@
 
       .cover-copy h1 {
         margin: 0.6rem 0 0.75rem;
-        font-size: clamp(2rem, 5vw, 3.8rem);
+        font-size: clamp(1.8rem, 3.5vw, 3rem);
       }
 
       .cover-copy p {
@@ -724,21 +730,18 @@
       }
 
       .cover-footer {
-        min-height: 44px;
+        min-height: clamp(90px, 18vh, 130px);
+        padding: 8px 20px;
       }
 
       .cover-logos img {
-        display: block;
-        width: auto;
-        height: clamp(110px, 14vh, 150px); /* Mais que o dobro dos 60-80px anteriores */
-        max-width: clamp(150px, 16vw, 220px);
-        object-fit: contain;
+        height: clamp(110px, 22vh, 130px);
       }
     }
 
     @media (max-height: 720px) and (min-width: 681px) {
       .cover-slide {
-        padding: 20px 7vw 72px;
+        padding: 20px 7vw clamp(150px, 24vh, 175px);
       }
 
       .cover-logo {
@@ -747,13 +750,13 @@
 
       .cover-copy {
         width: min(980px, 82%);
-        margin: 0;
+        margin: auto 0;
         padding: 8px 0;
       }
 
       .cover-copy h1 {
         margin: 0.55rem 0 0.75rem;
-        font-size: clamp(2rem, 4.15vw, 3.5rem);
+        font-size: clamp(1.8rem, 3.4vw, 3rem);
         line-height: 1.03;
       }
 
@@ -764,24 +767,16 @@
 
       .cover-footer {
         justify-content: center;
-        gap: clamp(1rem, 3vw, 2.25rem);
-        min-height: 82px;
+        min-height: clamp(140px, 24vh, 170px);
+        padding: 8px clamp(18px, 2vw, 24px);
       }
 
       .cover-logos {
-        gap: clamp(1rem, 2vw, 1.5rem);
+        gap: 0;
       }
 
-    .cover-logos img {
-      display: block;
-      width: auto;
-      height: clamp(110px, 14vh, 150px); /* Mais que o dobro dos 60-80px anteriores */
-      max-width: clamp(150px, 16vw, 220px);
-      object-fit: contain;
-    }
-
-      .cover-author {
-        font-size: clamp(1rem, 1.3vw, 1.15rem);
+      .cover-logos img {
+        height: clamp(120px, 22vh, 145px);
       }
     }
 
@@ -792,16 +787,18 @@
       }
 
       .cover-slide {
-        padding: 22px 20px 72px;
+        padding: 22px 20px clamp(150px, 20vh, 170px);
       }
 
       .cover-top {
         align-items: flex-start;
+        flex-wrap: wrap;
       }
 
       .cover-eyebrow {
-        max-width: 52%;
+        max-width: 100%;
         font-size: 0.55rem;
+        text-align: left;
       }
 
       .cover-copy {
@@ -809,7 +806,7 @@
       }
 
       .cover-copy h1 {
-        font-size: clamp(2.1rem, 9.5vw, 3.2rem);
+        font-size: clamp(1.8rem, 8vw, 2.7rem);
       }
 
       .cover-copy p {
@@ -818,25 +815,22 @@
 
       .cover-footer {
         align-items: center;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 1rem;
+        justify-content: flex-start;
+        min-height: clamp(110px, 16vh, 135px);
+        padding: 8px 20px;
+      }
+
+      .cover-logos {
+        justify-content: flex-start;
+        width: calc(100% - 136px);
+        box-sizing: border-box;
       }
 
       .cover-logos img {
-        display: block;
-        width: auto;
-        height: clamp(110px, 14vh, 150px); /* Mais que o dobro dos 60-80px anteriores */
-        max-width: clamp(150px, 16vw, 220px);
-        object-fit: contain;
-      }
-
-      .cover-author {
+        width: 100%;
+        height: auto;
         max-width: 100%;
-        border-left: 0;
-        padding-left: 0;
-        font-size: 0.88rem;
-        text-align: center;
+        max-height: none;
       }
 
       .deck-header {
@@ -1034,14 +1028,14 @@
       }
 
       .partner-logos {
-        left: 18px;
-        gap: 0.65rem;
-        padding: 5px 8px;
+        left: 12px;
+        width: min(230px, calc(100vw - 168px));
+        border-radius: 12px;
+        padding: 6px 9px;
       }
 
       .partner-logos img {
-        height: clamp(40px, 7vh, 50px);
-        max-width: 48px;
+        max-height: 58px;
       }
 
       .content-slide {
@@ -1064,7 +1058,7 @@
     <section class="deck-slide cover-slide is-active" data-slide="0" aria-label="Slide 1 de 6" aria-hidden="false">
       <header class="cover-top">
         <img class="cover-logo" src="assets/logo-claro.png" alt="Sampa Ar">
-        <span class="cover-eyebrow">PROJETO FINAL | FUTURE TECH LEADERS BRASIL 2026</span>
+        <span class="cover-eyebrow">Autora: Nathália C. Melo de Farias</span>
       </header>
 
       <div class="cover-copy">
@@ -1074,10 +1068,8 @@
 
       <footer class="cover-footer">
         <div class="cover-logos" aria-label="Organizações parceiras">
-          <img src="assets/Future_Tech_Leaders3-02.png" alt="Future Tech Leaders">
-          <img src="assets/UNDP-Logo-Blue-Medium.png" alt="United Nations Development Programme">
+          <img src="assets/union_logo.png" alt="Logos das organizações parceiras">
         </div>
-        <p class="cover-author">Autora: Nathália C. Melo de Farias</p>
       </footer>
     </section>
 
@@ -1119,8 +1111,7 @@
         </div>
       </div>
       <div class="partner-logos" aria-label="Organizações parceiras">
-        <img src="assets/Future_Tech_Leaders3-02.png" alt="Future Tech Leaders">
-        <img src="assets/UNDP-Logo-Blue-Medium.png" alt="United Nations Development Programme">
+        <img src="assets/union_logo.png" alt="Logos das organizações parceiras">
       </div>
     </section>
 
@@ -1163,8 +1154,7 @@
         </article>
       </div>
       <div class="partner-logos" aria-label="Organizações parceiras">
-        <img src="assets/Future_Tech_Leaders3-02.png" alt="Future Tech Leaders">
-        <img src="assets/UNDP-Logo-Blue-Medium.png" alt="United Nations Development Programme">
+        <img src="assets/union_logo.png" alt="Logos das organizações parceiras">
       </div>
     </section>
 
@@ -1196,8 +1186,7 @@
         </figure>
       </div>
       <div class="partner-logos" aria-label="Organizações parceiras">
-        <img src="assets/Future_Tech_Leaders3-02.png" alt="Future Tech Leaders">
-        <img src="assets/UNDP-Logo-Blue-Medium.png" alt="United Nations Development Programme">
+        <img src="assets/union_logo.png" alt="Logos das organizações parceiras">
       </div>
     </section>
 
@@ -1229,8 +1218,7 @@
         </figure>
       </div>
       <div class="partner-logos" aria-label="Organizações parceiras">
-        <img src="assets/Future_Tech_Leaders3-02.png" alt="Future Tech Leaders">
-        <img src="assets/UNDP-Logo-Blue-Medium.png" alt="United Nations Development Programme">
+        <img src="assets/union_logo.png" alt="Logos das organizações parceiras">
       </div>
     </section>
 
@@ -1270,8 +1258,7 @@
         <p><strong>Observação técnica:</strong> Ferramenta complementar de apoio à gestão ambiental (não substitui boletins oficiais da CETESB). Relatório técnico completo e código aberto disponíveis na plataforma.</p>
       </aside>
       <div class="partner-logos" aria-label="Organizações parceiras">
-        <img src="assets/Future_Tech_Leaders3-02.png" alt="Future Tech Leaders">
-        <img src="assets/UNDP-Logo-Blue-Medium.png" alt="United Nations Development Programme">
+        <img src="assets/union_logo.png" alt="Logos das organizações parceiras">
       </div>
     </section>
   </main>
