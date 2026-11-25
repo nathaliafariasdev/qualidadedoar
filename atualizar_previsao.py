@@ -13,6 +13,17 @@ sessao = requests.Session()
 retries = Retry(total=3, backoff_factor=2, status_forcelist=[429, 500, 502, 503, 504])
 sessao.mount("https://", HTTPAdapter(max_retries=retries))
 
+estacoes_sp = pd.DataFrame([
+    {"codigo": "POLI", "nome": "São Paulo (USP)", "lat": -23.5556, "lon": -46.7303},
+    {"codigo": "SJSP", "nome": "São José dos Campos", "lat": -23.2089, "lon": -45.8628},
+    {"codigo": "PPTE", "nome": "Presidente Prudente", "lat": -22.1200, "lon": -51.4086},
+    {"codigo": "SPAR", "nome": "Araçatuba", "lat": -21.1856, "lon": -50.4392},
+    {"codigo": "FRAN", "nome": "Franca", "lat": -20.5144, "lon": -47.3994},
+    {"codigo": "BAUR", "nome": "Bauru", "lat": -22.3458, "lon": -49.0289},
+    {"codigo": "UBA1", "nome": "Ubatuba", "lat": -23.4336, "lon": -45.0711},
+    {"codigo": "ILHA", "nome": "Ilha Solteira", "lat": -20.4319, "lon": -51.3442},
+])
+
 def coletar_dados_horarios(df_estacoes):
     registros = []
     for _, row in df_estacoes.iterrows():
