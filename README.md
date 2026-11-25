@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/banner-relatorio.jpg" alt="Sampa Ar — Future Tech Leaders & UNDP" width="100%">
+  <img src="assets/banner-relatorio.jfif" alt="Sampa Ar — Future Tech Leaders & UNDP" width="100%">
 </p>
 
 # Sampa Ar — Monitoramento Inteligente da Qualidade do Ar
