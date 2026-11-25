@@ -373,7 +373,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (pillAtualizacao) {
       pillAtualizacao.textContent = dadosGlobais.mapaAtualizadoTexto
         ? `Mapa atualizado: ${dadosGlobais.mapaAtualizadoTexto} (Horário de Brasília)`
-        : `Horário de geração do mapa indisponível; dados da fonte até ${formatarDataHoraBrasilia(dadosGlobais.atualizacaoTimestamp)} (Horário de Brasília)`;
+        : `Última atualização: ${formatarDataHoraBrasilia(dadosGlobais.atualizacaoTimestamp)} (Horário de Brasília)`;
     }
 
     popularControlesEstacoes(estacoesCache);
