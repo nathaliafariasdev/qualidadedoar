@@ -1,5 +1,9 @@
 <p align="center">
-  <img src="assets/logo-escuro.png" alt="Sampa Ar" width="280">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/logo-claro.png">
+    <source media="(prefers-color-scheme: light)" srcset="assets/logo-escuro.png">
+    <img alt="Sampa Ar" src="assets/logo-escuro.png" width="280">
+  </picture>
 </p>
 
 # Sampa Ar — Monitoramento Inteligente da Qualidade do Ar
