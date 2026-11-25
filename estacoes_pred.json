@@ -4,18 +4,20 @@
     "nome":"São Paulo (USP)",
     "lat":-23.5556,
     "lon":-46.7303,
-    "pm2_5_pred":13.29,
-    "pm10_pred":13.7,
-    "ultima_atualizacao":"25\/11\/2026 02:00"
+    "pm2_5_pred":12.9,
+    "pm10_pred":13.3,
+    "ultima_atualizacao":"25\/11\/2026 02:00",
+    "mapa_atualizado_em":"2026-11-25T02:43:34.313531-03:00"
   },
   {
     "codigo":"SJSP",
     "nome":"São José dos Campos",
     "lat":-23.2089,
     "lon":-45.8628,
-    "pm2_5_pred":9.68,
-    "pm10_pred":9.79,
-    "ultima_atualizacao":"25\/11\/2026 02:00"
+    "pm2_5_pred":9.4,
+    "pm10_pred":9.5,
+    "ultima_atualizacao":"25\/11\/2026 02:00",
+    "mapa_atualizado_em":"2026-11-25T02:43:34.313531-03:00"
   },
   {
     "codigo":"PPTE",
@@ -24,7 +26,8 @@
     "lon":-51.4086,
     "pm2_5_pred":10.2,
     "pm10_pred":10.51,
-    "ultima_atualizacao":"25\/11\/2026 02:00"
+    "ultima_atualizacao":"25\/11\/2026 02:00",
+    "mapa_atualizado_em":"2026-11-25T02:43:34.313531-03:00"
   },
   {
     "codigo":"SPAR",
@@ -33,7 +36,8 @@
     "lon":-50.4392,
     "pm2_5_pred":20.5,
     "pm10_pred":20.91,
-    "ultima_atualizacao":"25\/11\/2026 02:00"
+    "ultima_atualizacao":"25\/11\/2026 02:00",
+    "mapa_atualizado_em":"2026-11-25T02:43:34.313531-03:00"
   },
   {
     "codigo":"FRAN",
@@ -42,7 +46,8 @@
     "lon":-47.3994,
     "pm2_5_pred":4.63,
     "pm10_pred":4.84,
-    "ultima_atualizacao":"25\/11\/2026 02:00"
+    "ultima_atualizacao":"25\/11\/2026 02:00",
+    "mapa_atualizado_em":"2026-11-25T02:43:34.313531-03:00"
   },
   {
     "codigo":"BAUR",
@@ -51,7 +56,8 @@
     "lon":-49.0289,
     "pm2_5_pred":13.18,
     "pm10_pred":13.7,
-    "ultima_atualizacao":"25\/11\/2026 02:00"
+    "ultima_atualizacao":"25\/11\/2026 02:00",
+    "mapa_atualizado_em":"2026-11-25T02:43:34.313531-03:00"
   },
   {
     "codigo":"UBA1",
@@ -60,7 +66,8 @@
     "lon":-45.0711,
     "pm2_5_pred":9.58,
     "pm10_pred":9.58,
-    "ultima_atualizacao":"25\/11\/2026 02:00"
+    "ultima_atualizacao":"25\/11\/2026 02:00",
+    "mapa_atualizado_em":"2026-11-25T02:43:34.313531-03:00"
   },
   {
     "codigo":"ILHA",
@@ -69,6 +76,7 @@
     "lon":-51.3442,
     "pm2_5_pred":6.28,
     "pm10_pred":6.39,
-    "ultima_atualizacao":"25\/11\/2026 02:00"
+    "ultima_atualizacao":"25\/11\/2026 02:00",
+    "mapa_atualizado_em":"2026-11-25T02:43:34.313531-03:00"
   }
 ]
