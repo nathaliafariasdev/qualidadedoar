@@ -3765,9 +3765,9 @@ html {
 
 .footer-logos img {
   display: block;
-  width: auto;
-  max-width: 160px;
-  height: 86px;
+  width: clamp(220px, 32vw, 420px);
+  max-width: 100%;
+  height: auto;
   object-fit: contain;
   background: transparent;
 }
