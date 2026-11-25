@@ -1,7 +1,6 @@
 import numpy as np
 import pandas as pd
 import requests
-import geobr
 import geopandas as gpd
 import folium
 import branca.colormap as cm
@@ -62,8 +61,8 @@ def coletar_dados_horarios(df_estacoes):
 df_pred = coletar_dados_horarios(estacoes_sp)
 df_pred.to_json("estacoes_pred.json", orient="records", force_ascii=False, indent=2)
 
-# Interpolação espacial IDW para os 645 municípios de SP
-sp_municipios = geobr.read_municipality(code_muni="SP", year=2020).to_crs("EPSG:4326")
+# Interpolação espacial IDW para os 645 municípios de SP (via GeoJSON local)
+sp_municipios = gpd.read_file("assets/sp_municipios.geojson").to_crs("EPSG:4326")
 coords_estacoes = df_pred[["lon", "lat"]].values
 tree = cKDTree(coords_estacoes)
 
