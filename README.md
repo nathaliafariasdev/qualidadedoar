@@ -12,9 +12,6 @@
   <a href="https://nathaliafariasdev.github.io/qualidadedoar/">
     <img src="https://img.shields.io/badge/🌐_Acessar_Plataforma_Interativa-2B5B84?style=for-the-badge" alt="Acessar Plataforma">
   </a>
-  <a href="https://nathaliafariasdev.github.io/qualidadedoar/dashboard.html">
-    <img src="https://img.shields.io/badge/🗺️_Mapa_em_Tempo_Real-68B893?style=for-the-badge" alt="Mapa em Tempo Real">
-  </a>
   <a href="assets/relatorio-sampa-ar.pdf">
     <img src="https://img.shields.io/badge/📄_Relatório_Técnico_(PDF)-1E293B?style=for-the-badge" alt="Relatório Técnico PDF">
   </a>
