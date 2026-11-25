@@ -75,7 +75,6 @@ def coletar_dados_horarios(df_estacoes):
     return pd.DataFrame(registros)
 
 df_pred = coletar_dados_horarios(estacoes_sp)
-df_pred.to_json("estacoes_pred.json", orient="records", force_ascii=False, indent=2)
 
 # Interpolação espacial IDW para os 645 municípios de SP (via GeoJSON local)
 sp_municipios = gpd.read_file("assets/sp_municipios.geojson").to_crs("EPSG:4326")
@@ -163,4 +162,10 @@ for _, est in df_pred.iterrows():
 
 camada_estacoes.add_to(mapa_sp)
 mapa_sp.save("mapa_sp.html")
-print("Atualização horária concluída: estacoes_pred.json e mapa_sp.html gerados.")
+
+mapa_atualizado_em = pd.Timestamp.now(
+    tz="America/Sao_Paulo"
+).isoformat(timespec="microseconds")
+df_pred["mapa_atualizado_em"] = mapa_atualizado_em
+df_pred.to_json("estacoes_pred.json", orient="records", force_ascii=False, indent=2)
+print(f"Mapa atualizado em {mapa_atualizado_em}: estacoes_pred.json e mapa_sp.html gerados.")

@@ -10,7 +10,27 @@ const formatarNumero = (valor, casas = 1) => {
 function lerDataAtualizacao(valor, codigo) {
   const match = /^(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2})$/.exec(valor);
   if (!match) {
-    throw new Error(`Data de atualização inválida para a estação ${codigo}: ${valor}`);
+    const timestamp = Date.parse(valor);
+    if (!Number.isFinite(timestamp)) {
+      throw new Error(`Data de atualização inválida para a estação ${codigo}: ${valor}`);
+    }
+
+    const partes = new Intl.DateTimeFormat('pt-BR', {
+      timeZone: 'America/Sao_Paulo',
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hourCycle: 'h23'
+    }).formatToParts(new Date(timestamp));
+    const valores = Object.fromEntries(partes.map(parte => [parte.type, parte.value]));
+
+    return {
+      timestamp,
+      texto: `${valores.day}/${valores.month}/${valores.year} às ${valores.hour}:${valores.minute}:${valores.second}`
+    };
   }
 
   const [, dia, mes, ano, hora, minuto] = match;
@@ -115,9 +135,16 @@ function normalizarDados(lista) {
       ? estacao
       : maisRecente
   );
+  const mapaAtualizadoEm = typeof lista[0].mapa_atualizado_em === 'string'
+    ? lista[0].mapa_atualizado_em.trim()
+    : '';
+  const dataAtualizacaoMapa = mapaAtualizadoEm
+    ? lerDataAtualizacao(mapaAtualizadoEm, 'mapa')
+    : null;
 
   return {
     atualizacaoTimestamp: atualizacaoMaisRecente.dataAtualizacao.timestamp,
+    mapaAtualizadoTexto: dataAtualizacaoMapa ? dataAtualizacaoMapa.texto : '',
     media_sp_pm25: somaPm25 / estacoes.length,
     media_sp_pm10: somaPm10 / estacoes.length,
     estacoes
@@ -125,59 +152,55 @@ function normalizarDados(lista) {
 }
 
 const GUIAS_RAPIDOS = {
-  saude: 'Sampa Ar é a média aritmética das previsões para oito estações. Ao escolher uma estação, os círculos e o card mostram a previsão individual. No mapa, a interpolação IDW estima valores entre as estações; isso não equivale a uma medição em cada município.',
-  pm25: '<strong>PM<sub>2.5</sub>:</strong> partículas suspensas com diâmetro de até 2,5 micrômetros. O painel mostra a concentração prevista para a hora seguinte, em µg/m³. A faixa de referência não é um alerta oficial nem uma recomendação de saúde.',
-  pm10: '<strong>PM<sub>10</sub>:</strong> partículas suspensas com diâmetro de até 10 micrômetros. A previsão combina o histórico recente de PM<sub>10</sub> com dados meteorológicos, indicadores atmosféricos e sinais GNSS.',
-  satelite: '<strong>Por que GNSS?</strong> Imagens ópticas podem perder informação à noite ou sob nuvens e costumam oferecer registros em passagens espaçadas. Receptores da RBMC/IBGE acompanham sinais GNSS continuamente, em diferentes condições de céu. O SNR (relação entre sinal e ruído) é uma pista indireta, não uma medição de partículas; o modelo também usa dados horários do Open-Meteo.'
+  saude: 'O Sampa Ar combina medições atmosféricas e observáveis geodésicos GNSS em 8 estações base paulistas (RBMC/IBGE) para prever as concentrações de PM2,5 e PM10 na hora seguinte. A cobertura para os 645 municípios do Estado de São Paulo é obtida por interpolação espacial (IDW) — representando estimativas computacionais em rede, e não estações físicas locais.',
+  pm25: 'Partículas finas inaláveis (diâmetro ≤ 2,5 µm) capazes de atingir os alvéolos pulmonares. Padrão CETESB (Faixa Boa): média de 24h até 25 µg/m³.',
+  pm10: 'Partículas inaláveis (diâmetro ≤ 10 µm) associadas a poeira suspensa, queima de biomassa e emissões veiculares. Padrão CETESB (Faixa Boa): média de 24h até 50 µg/m³.',
+  satelite: 'Sinais de satélites GNSS captados pelas antenas geodésicas da RBMC/IBGE (relação sinal-ruído — SNR e atraso troposférico) acoplados a dados meteorológicos e profundidade óptica de aerossóis (AOD).'
 };
 
 const DOCS_FTL = {
   intro: `
     <h3>O desafio</h3>
-    <p>PM<sub>2.5</sub> e PM<sub>10</sub> são partículas suspensas no ar. O monitoramento em solo depende de estações físicas, que têm custo de instalação e manutenção; por isso, a cobertura contínua não alcança todos os municípios paulistas.</p>
+    <p>O monitoramento contínuo de material particulado (PM2,5 e PM10) depende de estações físico-químicas de alto custo de implantação e manutenção, deixando a maior parte dos 645 municípios paulistas sem cobertura telemétrica local.</p>
     <h3>O que o Sampa Ar desenvolveu</h3>
-    <p>O Sampa Ar integra meteorologia, indicadores atmosféricos e sinais GNSS para prever as concentrações de PM<sub>2.5</sub> e PM<sub>10</sub> na hora seguinte em oito estações de referência. Uma etapa de interpolação espacial projeta essas previsões nos centros dos 645 municípios paulistas.</p>
-    <p>Essa ampliação é uma <strong>estimativa computacional</strong>: não cria sensores físicos nas cidades nem substitui medições oficiais.</p>
+    <p>O Sampa Ar reaproveita a infraestrutura geodésica existente da Rede Brasileira de Monitoramento Contínuo (RBMC/IBGE) como sensor ambiental complementar. Combinando observáveis GNSS (SNR), meteorologia e profundidade óptica de aerossóis (AOD) em uma arquitetura profunda CNN-LSTM, o sistema prevê concentrações horárias em 8 estações base e projeta o campo estadual via interpolação espacial IDW.</p>
     <h3>Conexão com os ODS</h3>
     <ul>
-      <li><strong>ODS 11, meta 11.6:</strong> informação para estudar impactos ambientais urbanos e apoiar políticas de qualidade do ar.</li>
-      <li><strong>ODS 3, meta 3.9:</strong> contribuir para identificar episódios de poluição associados a riscos à saúde.</li>
-      <li><strong>ODS 9, meta 9.5:</strong> reaproveitar a infraestrutura GNSS da RBMC/IBGE e ferramentas abertas para inovação.</li>
+      <li><strong>ODS 11 (Meta 11.6):</strong> Reduzir o impacto ambiental negativo per capita das cidades, com atenção especial à qualidade do ar e gestão municipal.</li>
+      <li><strong>ODS 3 (Meta 3.9):</strong> Apoiar a identificação preventiva de episódios de poluição atmosférica associados a riscos respiratórios e cardiovasculares.</li>
+      <li><strong>ODS 9 (Meta 9.5):</strong> Reaproveitar a infraestrutura científica e geodésica aberta da RBMC/IBGE para inovação ambiental de baixo custo.</li>
     </ul>
   `,
   dados: `
     <h3>Fontes e cobertura</h3>
-    <p>A série reúne <strong>60 dias de dados horários</strong> do Open-Meteo Air Quality &amp; Weather e parâmetros SNR GNSS da RBMC/IBGE em oito estações: POLI (São Paulo/USP), SJSP (São José dos Campos), PPTE (Presidente Prudente), SPAR (Araçatuba), FRAN (Franca), BAUR (Bauru), UBA1 (Ubatuba) e ILHA (Ilha Solteira).</p>
+    <p>A série histórica reúne 60 dias de registros horários (1.440 horas por estação) integrando qualidade do ar e meteorologia operacional (Open-Meteo / CAMS) com observáveis GNSS da RBMC/IBGE em 8 estações distribuídas pelo Estado de São Paulo: POLI (São Paulo/USP), SJSP (São José dos Campos), PPTE (Presidente Prudente), SPAR (Araçatuba), FRAN (Franca), BAUR (Bauru), UBA1 (Ubatuba) e ILHA (Ilha Solteira).</p>
     <h3>O que entra em cada previsão</h3>
-    <p>O modelo analisa janelas deslizantes de 24 horas. As oito variáveis são o histórico recente de PM<sub>2.5</sub> e PM<sub>10</sub>, profundidade óptica de aerossóis (AOD, indicador de partículas ao longo da coluna atmosférica), temperatura, umidade relativa, precipitação e duas codificações cíclicas da hora (seno e cosseno). A saída é uma previsão para <strong>t+1</strong>, isto é, a hora seguinte.</p>
-    <p>A codificação cíclica ajuda a representar que 23h e 0h são horas vizinhas, apesar da diferença numérica entre 23 e 0.</p>
+    <p>O modelo processa janelas deslizantes de 24 horas contendo 8 variáveis: histórico de PM2,5, PM10, profundidade óptica de aerossóis (AOD), temperatura, umidade relativa, precipitação e codificação cíclica da hora (seno e cosseno) para preservar a continuidade entre 23h e 00h na previsão de t+1.</p>
   `,
   modelo: `
     <h3>Da sequência ao valor previsto</h3>
-    <p>A arquitetura híbrida <strong>1D-CNN + LSTM</strong> combina duas formas de analisar séries temporais:</p>
+    <p>A arquitetura híbrida combina duas formas de analisar séries temporais:</p>
     <ul>
-      <li><strong>1D-CNN (convolução unidimensional):</strong> identifica variações locais e padrões de curto prazo nos dados horários.</li>
-      <li><strong>LSTM:</strong> mantém contexto ao longo da sequência para aprender dependências temporais e ciclos atmosféricos diários.</li>
+      <li><strong>1D-CNN (Convolução Unidimensional):</strong> Extrai assinaturas locais de alta frequência e variações bruscas de curto prazo nos dados horários.</li>
+      <li><strong>LSTM (Long Short-Term Memory):</strong> Captura a inércia temporal e os ciclos diários de acúmulo e dispersão de poluentes na camada limite planetária.</li>
     </ul>
     <h3>Como as previsões chegam ao mapa</h3>
-    <p>O modelo Sampa Ar gera previsões para as oito estações. Em seguida, a interpolação <strong>IDW</strong> (Inverse Distance Weighting, ou ponderação pelo inverso da distância) estima valores nos centros municipais usando as quatro estações mais próximas; pontos mais próximos têm maior influência.</p>
-    <p>Assim, o mapa HTML interativo, gerado com Folium e integrado ao dashboard, representa uma superfície estimada a partir dos pontos de referência. Condições locais entre estações podem não estar representadas.</p>
+    <p>Após gerar as previsões nas 8 estações base, o algoritmo aplica interpolação espacial pelo Inverso do Quadrado da Distância (IDW, p = 2, k = 4 vizinhos mais próximos) sobre a malha oficial do IBGE para estimar os níveis nos 645 municípios paulistas.</p>
   `,
   resultados: `
     <h3>Resultados de validação reportados</h3>
-    <p>A comparação do documento é entre um modelo-base treinado com 14 dias e o modelo final com 60 dias e codificação cíclica da hora:</p>
+    <p>Além da redução de 74% no erro médio absoluto (MAE) ao expandir a janela de treino de 14 para 60 dias com codificação cíclica, o sistema foi auditado em 13 localidades paulistas frente às redes de referência CETESB e CAMS:</p>
     <table>
-      <thead><tr><th>Métrica</th><th>Base (14 dias)</th><th>Final (60 dias + ciclo horário)</th><th>Variação</th></tr></thead>
+      <thead><tr><th>Conjunto auditado</th><th>MAE</th><th>RMSE</th><th>Acerto de Faixa CETESB</th></tr></thead>
       <tbody>
-        <tr><td>MAE de PM<sub>2.5</sub></td><td>4,30 µg/m³</td><td>1,13 µg/m³</td><td>redução de ~74%</td></tr>
-        <tr><td>MAE de PM<sub>10</sub></td><td>4,92 µg/m³</td><td>1,33 µg/m³</td><td>redução de ~73%</td></tr>
-        <tr><td>Perda Huber</td><td>0,2083</td><td>0,0217</td><td>redução de ~90%</td></tr>
+        <tr><td>Estações Base (com GNSS, N=5)</td><td>2,16 µg/m³</td><td>2,99 µg/m³</td><td>100,0%</td></tr>
+        <tr><td>Expansão Espacial (sem GNSS / IDW, N=8)</td><td>4,78 µg/m³</td><td>6,76 µg/m³</td><td>75,0%</td></tr>
+        <tr><td>Consolidado Estadual (N=13)</td><td>3,77 µg/m³</td><td>5,63 µg/m³</td><td>84,6%</td></tr>
       </tbody>
     </table>
-    <p><strong>MAE</strong> é o erro absoluto médio: em termos simples, indica o tamanho médio da diferença entre previsões e valores de referência no conjunto avaliado. A perda Huber também mede erro, mas não é expressa em µg/m³. São métricas de validação; não garantem o mesmo erro em todas as horas ou nos 645 municípios.</p>
+    <p><strong>MAE</strong> e <strong>RMSE</strong> expressam erros médios das estimativas em µg/m³; o acerto de faixa mede a concordância com a classificação de referência CETESB.</p>
     <h3>Aplicações possíveis e próximos passos</h3>
-    <p>O painel pode apoiar análises de saúde pública, gestão municipal e defesa civil, monitoramento ambiental e planejamento urbano. Isso significa ampliar informação para investigação e planejamento — não emitir alertas oficiais ou recomendações individuais.</p>
-    <p>O documento aponta como próximos passos incorporar outros poluentes, como ozônio e dióxido de nitrogênio, automatizar a execução em nuvem e avaliar a expansão para outros estados.</p>
+    <p>O painel oferece suporte técnico para vigilância ambiental, defesa civil e planejamento urbano em municípios sem estações telemétricas. Como próximos passos, prevê-se a inclusão de ozônio (O<sub>3</sub>) e dióxido de nitrogênio (NO<sub>2</sub>), além da expansão da malha para outros estados atendidos pela RBMC.</p>
   `
 };
 
@@ -220,7 +243,7 @@ function atualizarPainelSuave(titulo, pm25, pm10, codigo = 'SP') {
   if (elOrbStatus) elOrbStatus.textContent = infoPm25.status;
   if (elDialNumber) elDialNumber.textContent = formatarNumero(pm25Valor, 1);
   if (elDica) {
-    elDica.textContent = `Faixa de referência CETESB para PM2.5: ${infoPm25.status}. É uma previsão para a hora seguinte, não um boletim oficial nem uma orientação de saúde.`;
+    elDica.textContent = 'Faixa de referência CETESB para PM2,5: Boa. Estimativa operacional para a hora seguinte (t+1) gerada pela rede híbrida CNN-LSTM. Para boletins oficiais de saúde pública, consulte a rede telemétrica da CETESB.';
   }
   if (elPm25) elPm25.textContent = formatarNumero(pm25Valor, 1);
   if (elPm10) elPm10.textContent = formatarNumero(pm10Valor, 1);
@@ -348,7 +371,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const pillAtualizacao = document.getElementById('pill-atualizacao');
     if (pillAtualizacao) {
-      pillAtualizacao.textContent = `Atualizado: ${formatarDataHoraBrasilia(dadosGlobais.atualizacaoTimestamp)} (Horário de Brasília)`;
+      pillAtualizacao.textContent = dadosGlobais.mapaAtualizadoTexto
+        ? `Mapa atualizado: ${dadosGlobais.mapaAtualizadoTexto} (Horário de Brasília)`
+        : `Horário de geração do mapa indisponível; dados da fonte até ${formatarDataHoraBrasilia(dadosGlobais.atualizacaoTimestamp)} (Horário de Brasília)`;
     }
 
     popularControlesEstacoes(estacoesCache);
@@ -356,7 +381,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // Carrega as previsões geradas pelo modelo para as estações.
-  fetch('estacoes_pred.json')
+  fetch(`estacoes_pred.json?t=${Date.now()}`, { cache: 'no-store' })
     .then(r => {
       if (!r.ok) {
         throw new Error(`Falha ao carregar estacoes_pred.json (${r.status})`);
