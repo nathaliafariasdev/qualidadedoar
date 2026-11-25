@@ -3742,6 +3742,10 @@ html {
   box-shadow: 0 5px 18px rgba(37, 76, 57, 0.06);
 }
 
+.ws-topbar .ws-nav a {
+  color: #334155;
+}
+
 .ws-topbar .ws-nav-item {
   color: #536a5e;
 }
