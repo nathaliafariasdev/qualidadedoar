@@ -4,79 +4,79 @@
     "nome":"São Paulo (USP)",
     "lat":-23.5556,
     "lon":-46.7303,
-    "pm2_5_pred":10.3,
-    "pm10_pred":13.18,
-    "ultima_atualizacao":"27\/11\/2026 06:00",
-    "mapa_atualizado_em":"2026-11-27T06:41:41.578990-03:00"
+    "pm2_5_pred":15.1,
+    "pm10_pred":18.8,
+    "ultima_atualizacao":"27\/11\/2026 16:00",
+    "mapa_atualizado_em":"2026-11-27T16:29:25.582972-03:00"
   },
   {
     "codigo":"SJSP",
     "nome":"São José dos Campos",
     "lat":-23.2089,
     "lon":-45.8628,
-    "pm2_5_pred":4.63,
-    "pm10_pred":6.49,
-    "ultima_atualizacao":"27\/11\/2026 06:00",
-    "mapa_atualizado_em":"2026-11-27T06:41:41.578990-03:00"
+    "pm2_5_pred":5.7,
+    "pm10_pred":8.0,
+    "ultima_atualizacao":"27\/11\/2026 16:00",
+    "mapa_atualizado_em":"2026-11-27T16:29:25.582972-03:00"
   },
   {
     "codigo":"PPTE",
     "nome":"Presidente Prudente",
     "lat":-22.12,
     "lon":-51.4086,
-    "pm2_5_pred":7.7,
-    "pm10_pred":8.9,
-    "ultima_atualizacao":"27\/11\/2026 06:00",
-    "mapa_atualizado_em":"2026-11-27T06:41:41.578990-03:00"
+    "pm2_5_pred":8.7,
+    "pm10_pred":9.1,
+    "ultima_atualizacao":"27\/11\/2026 16:00",
+    "mapa_atualizado_em":"2026-11-27T16:29:25.582972-03:00"
   },
   {
     "codigo":"SPAR",
     "nome":"Araçatuba",
     "lat":-21.1856,
     "lon":-50.4392,
-    "pm2_5_pred":11.74,
-    "pm10_pred":12.57,
-    "ultima_atualizacao":"27\/11\/2026 06:00",
-    "mapa_atualizado_em":"2026-11-27T06:41:41.578990-03:00"
+    "pm2_5_pred":14.3,
+    "pm10_pred":14.7,
+    "ultima_atualizacao":"27\/11\/2026 16:00",
+    "mapa_atualizado_em":"2026-11-27T16:29:25.582972-03:00"
   },
   {
     "codigo":"FRAN",
     "nome":"Franca",
     "lat":-20.5144,
     "lon":-47.3994,
-    "pm2_5_pred":2.9,
-    "pm10_pred":3.5,
-    "ultima_atualizacao":"27\/11\/2026 06:00",
-    "mapa_atualizado_em":"2026-11-27T06:41:41.578990-03:00"
+    "pm2_5_pred":2.58,
+    "pm10_pred":2.58,
+    "ultima_atualizacao":"27\/11\/2026 16:00",
+    "mapa_atualizado_em":"2026-11-27T16:29:25.582972-03:00"
   },
   {
     "codigo":"BAUR",
     "nome":"Bauru",
     "lat":-22.3458,
     "lon":-49.0289,
-    "pm2_5_pred":8.65,
-    "pm10_pred":9.68,
-    "ultima_atualizacao":"27\/11\/2026 06:00",
-    "mapa_atualizado_em":"2026-11-27T06:41:41.578990-03:00"
+    "pm2_5_pred":10.4,
+    "pm10_pred":12.1,
+    "ultima_atualizacao":"27\/11\/2026 16:00",
+    "mapa_atualizado_em":"2026-11-27T16:29:25.582972-03:00"
   },
   {
     "codigo":"UBA1",
     "nome":"Ubatuba",
     "lat":-23.4336,
     "lon":-45.0711,
-    "pm2_5_pred":13.18,
-    "pm10_pred":18.64,
-    "ultima_atualizacao":"27\/11\/2026 06:00",
-    "mapa_atualizado_em":"2026-11-27T06:41:41.578990-03:00"
+    "pm2_5_pred":11.1,
+    "pm10_pred":18.0,
+    "ultima_atualizacao":"27\/11\/2026 16:00",
+    "mapa_atualizado_em":"2026-11-27T16:29:25.582972-03:00"
   },
   {
     "codigo":"ILHA",
     "nome":"Ilha Solteira",
     "lat":-20.4319,
     "lon":-51.3442,
-    "pm2_5_pred":11.6,
-    "pm10_pred":12.7,
-    "ultima_atualizacao":"27\/11\/2026 06:00",
-    "mapa_atualizado_em":"2026-11-27T06:41:41.578990-03:00"
+    "pm2_5_pred":11.0,
+    "pm10_pred":11.2,
+    "ultima_atualizacao":"27\/11\/2026 16:00",
+    "mapa_atualizado_em":"2026-11-27T16:29:25.582972-03:00"
   }
 ]
